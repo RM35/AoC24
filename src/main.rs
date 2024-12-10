@@ -1,7 +1,8 @@
 mod one;
-use one::main as problem;
 
-fn main() {
-    problem();
+fn main() -> std::io::Result<()> {
+    one::problem_part_one()?;
+    one::problem_part_two()?;
+    Ok(())
 }
     
