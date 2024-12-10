@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::prelude::*;
+use std::collections::HashMap;
 
 pub fn problem_part_one() -> std::io::Result<()> { 
     let mut file = File::open("data/one_input")?;
@@ -41,7 +42,7 @@ pub fn problem_part_one() -> std::io::Result<()> {
     second_vec.sort();
 
     let mut total: i32 = 0;
-    for (a, b) in first_vec.iter().zip(second_vec.iter()) {
+    for (&a, &b) in first_vec.iter().zip(second_vec.iter()) {
         total = total + (b - a).abs();
     } 
 
@@ -87,15 +88,25 @@ pub fn problem_part_two() -> std::io::Result<()> {
 
     }
 
-    first_vec.sort();
-    second_vec.sort();
+    //Count vector 2 occurences
+    let mut counts: HashMap<i32, i32> = HashMap::new();
+
+    for &item in second_vec.iter() {
+        counts.entry(item)
+              .and_modify(|x| *x += 1)
+              .or_insert(1);
+    }
+    //println!("{:?}", counts);
 
     let mut total: i32 = 0;
-    for (a, b) in first_vec.iter().zip(second_vec.iter()) {
-        total = total + (b - a).abs();
-    } 
 
-    println!("{}", total);
+    for value in first_vec.iter() {
+        if let Some(counted) = counts.get(&value) {
+            total += counted * value
+        }
+    }
+
+    println!("{total}");
 
     Ok(())
 }
