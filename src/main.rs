@@ -1,8 +1,8 @@
-mod one;
+mod two;
 
 fn main() -> std::io::Result<()> {
-    one::problem_part_one()?;
-    one::problem_part_two()?;
+    two::problem_part_one()?;
+    two::problem_part_two()?;
     Ok(())
 }
     
